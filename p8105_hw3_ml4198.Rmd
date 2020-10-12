@@ -22,3 +22,41 @@ options(
 scale_colour_discrete = scale_color_viridis_d
 scale_fill_discrete = scale_fill_viridis_d
 ```
+
+## Problem 1
+
+```{r data}
+library(p8105.datasets)
+data("instacart")
+```
+
+This is a dataframe of Instacart orders with 17 variables and 1,384,617 entries. Key variables are user_id, order_id, product_id, aisle_id.
+
+```{r}
+instacart %>% 
+    group_by(aisle_id) %>% 
+  summarize(
+    n_obs = n()
+    ) %>% 
+  mutate(
+    freq_rank = min_rank(desc(n_obs))
+    ) %>% 
+  filter(freq_rank < 10)
+```
+
+There are 134 aisles, and the most commonly ordered from are aisle 83 (150609 orders), 24 (150473 orders), and 123 (78493 orders).
+
+```{r}
+instacart %>% 
+    group_by(aisle_id) %>% 
+  summarize(
+    n_obs = n()
+    ) %>% 
+  mutate(
+    freq_rank = min_rank(desc(n_obs))
+    ) %>% 
+  filter(n_obs > 10000) %>% 
+  arrange(freq_rank)
+```
+
+
