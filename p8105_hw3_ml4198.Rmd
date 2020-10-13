@@ -56,7 +56,20 @@ instacart %>%
     freq_rank = min_rank(desc(n_obs))
     ) %>% 
   filter(n_obs > 10000) %>% 
-  arrange(freq_rank)
+  arrange(freq_rank) %>% 
+  ggplot(aes(x = freq_rank, y = n_obs)) +
+  geom_point() + 
+  scale_x_continuous(
+    breaks = c(1, 5, 10, 15, 20, 25, 30, 35),
+    minor_breaks = c(1:39)) +
+  labs(
+    x = "Aisle",
+    y = "Number of items ordered"
+  )
 ```
 
-
+labs(
+    title = "Temperature plot",
+    x = "Minimum Daily Temperature (C)",
+    y = "Maximum Daily Temperature (C)",
+    caption = "Data from the rnoaa packaege: temperatures in 2017"
