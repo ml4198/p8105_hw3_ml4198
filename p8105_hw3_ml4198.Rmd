@@ -46,6 +46,8 @@ instacart %>%
 
 There are 134 aisles, and the most commonly ordered from are aisle 83 (150609 orders), 24 (150473 orders), and 123 (78493 orders).
 
+**Code for figure 1**
+
 ```{r}
 instacart %>% 
     group_by(aisle_id) %>% 
@@ -64,12 +66,8 @@ instacart %>%
     minor_breaks = c(1:39)) +
   labs(
     x = "Aisle",
-    y = "Number of items ordered"
+    y = "Number of items ordered",
+    title = "Figure 1"
   )
 ```
 
-labs(
-    title = "Temperature plot",
-    x = "Minimum Daily Temperature (C)",
-    y = "Maximum Daily Temperature (C)",
-    caption = "Data from the rnoaa packaege: temperatures in 2017"
