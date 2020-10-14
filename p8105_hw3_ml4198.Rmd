@@ -59,15 +59,30 @@ instacart %>%
     ) %>% 
   filter(n_obs > 10000) %>% 
   arrange(freq_rank) %>% 
-  ggplot(aes(x = freq_rank, y = n_obs)) +
+  ggplot(aes(x = freq_rank, y = n_obs, color = aisle_id)) +
   geom_point() + 
   scale_x_continuous(
     breaks = c(1, 5, 10, 15, 20, 25, 30, 35),
     minor_breaks = c(1:39)) +
   labs(
-    x = "Aisle",
+    x = "Aisle Rank",
     y = "Number of items ordered",
-    title = "Figure 1"
+    title = "Figure 1",
+    color = "Aisle ID"
   )
 ```
+
+**Code for table 1**
+
+```{r}
+instacart %>% 
+  select(aisle, product_name) %>% 
+  filter(aisle == c("baking ingredients", "dog food care", "packaged vegetables fruits")) %>% 
+  group_by(aisle, product_name) %>% 
+  summarize(n_obs = n()) %>% 
+  arrange(aisle, desc(n_obs)) %>% 
+  filter(min_rank(desc(n_obs)) < 4)
+```
+  
+
 
