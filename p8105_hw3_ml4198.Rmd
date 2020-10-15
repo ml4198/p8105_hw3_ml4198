@@ -110,12 +110,15 @@ accel_df = read.csv("./accel_data.csv") %>%
     names_prefix = "activity_",
     values_to = "activity_counts") %>% 
   mutate(
+    minute_of_day = as.integer(minute_of_day),
     weekend = ifelse(grepl("Saturday", day), TRUE,
     ifelse(grepl("Sunday", day), TRUE, FALSE))) %>% 
   select(week, day_id, day, weekend, everything())
 ```
 
 accel_df is a dataframe with 6 variables and 50,400 entries. Variables include week and day of study period, day of week, weekend, minute of day, and activity counts per minute. 
+
+**Table**
 
 ```{r}
 accel_df %>% 
@@ -124,3 +127,13 @@ accel_df %>%
   knitr::kable(digits = 0)
 ```
 
+
+**Plot**
+
+```{r}
+accel_df %>% 
+  ggplot(aes(x = minute_of_day, y = activity_counts, color = day)) +
+  geom_point(alpha = .5)
+```
+
+There is a trimodal distribution of activity pattern throughout the day, most notably in morning and evening, less pronounced at midday.
