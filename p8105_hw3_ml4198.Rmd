@@ -84,7 +84,6 @@ instacart %>%
   filter(min_rank(desc(n_obs)) < 4)
 ```
   
-
 **Code for Table 2**
 
 ```{r}
@@ -99,3 +98,29 @@ instacart %>%
   ) %>% 
   knitr::kable(digits = 1)
 ```
+
+## Problem 2
+
+```{r}
+accel_df = read.csv("./accel_data.csv") %>% 
+  janitor::clean_names() %>% 
+  pivot_longer(
+    activity_1:activity_1440, 
+    names_to = "minute_of_day",
+    names_prefix = "activity_",
+    values_to = "activity_counts") %>% 
+  mutate(
+    weekend = ifelse(grepl("Saturday", day), TRUE,
+    ifelse(grepl("Sunday", day), TRUE, FALSE))) %>% 
+  select(week, day_id, day, weekend, everything())
+```
+
+accel_df is a dataframe with 6 variables and 50,400 entries. Variables include week and day of study period, day of week, weekend, minute of day, and activity counts per minute. 
+
+```{r}
+accel_df %>% 
+  group_by(day_id, day) %>% 
+  summarize(sum(activity_counts)) %>% 
+  knitr::kable(digits = 0)
+```
+
